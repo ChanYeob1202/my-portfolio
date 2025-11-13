@@ -12,7 +12,7 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="flex items-center justify-between px-8 md:px-24 py-2 sticky top-0 bg-[#eeeee6] z-50">
+    <nav className="flex items-center justify-between px-8 md:px-24 py-2 sticky top-0 bg-white z-50">
       {/* Logo */}
       <div className="bg-red-800 text-white px-4 py-2 rounded-2xl font-semibold text-2xl">
         <button onClick={() => scrollToSection('hero')}>M</button>
@@ -36,7 +36,7 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 bg-[#eeeee6] shadow-lg md:hidden">
+        <div className="absolute top-full left-0 right-0 bg-white shadow-lg md:hidden">
           <div className="flex flex-col items-center py-4 gap-4 text-black font-semibold">
             <button onClick={() => scrollToSection('hero')} className="w-full py-2 hover:bg-gray-200">
               Home

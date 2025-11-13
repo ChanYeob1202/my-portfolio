@@ -5,17 +5,17 @@ export default function Hero() {
   return (
     <div 
       id = "hero"      
-      className="min-h-screen flex items-center justify-center"
+      className="min-h-screen flex items-center justify-center bg-white"
       >
       <div className="max-w-5xl mx-auto px-8 md:px-16 w-full text-center">
         
-        {/* Main heading with embedded profile image */}
+        {/* Main heading with embedded profile image*/}
         <div className="mb-12">
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-gray-700 leading-tight">
             {/* First line with profile pic */}
             <span className="inline-flex items-center flex-wrap justify-center gap-4">
               Hello
-              <span className="inline-block bg-orange-400 rounded-full px-8 py-2 mx-2">
+              <span className="inline-block bg-orange-400 rounded-full px-8 py-2 mx-2 animate-bounce-twice">
                 <img 
                   src="/img/profile.jpg"
                   alt="profile"
@@ -42,21 +42,20 @@ export default function Hero() {
         </div>
 
         {/* Description paragraph */}
-        {/* Description paragraph */}
         <div className="max-w-3xl mx-auto mb-8 space-y-4">
           <p className="text-base md:text-lg md:font-semibold text-gray-700 leading-relaxed">
-            Front-end developer solving real-world problems through thoughtful web applications.
+            Front-end developer building code to help my community and influence positive change 
+            through thoughtful web applications.
           </p>
           <p className="text-base md:text-lg md:font-semibold text-gray-700 leading-relaxed">
             From managing a coffee shop to managing codebases—I bring problem-solving skills and a 
             user-first mindset to every project. I'm passionate about creating digital experiences 
-            that help people and businesses thrive.
+            that empower people, strengthen communities, and drive meaningful impact.
           </p>
           <p className="text-base md:text-lg md:font-semibold text-gray-700 leading-relaxed">
             Open to opportunities. Let's build something great together.
           </p>
         </div>
-
         {/* Social badges */}
         <div className="flex gap-4 items-center justify-center flex-wrap mb-10">
           <a 
@@ -75,6 +74,22 @@ export default function Hero() {
         </div>
         
       </div>
+
+      {/* Custom animation styles */}
+      <style jsx>{`
+        @keyframes bounce-twice {
+          0%, 100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-15px);
+          }
+        }
+        
+        .animate-bounce-twice {
+          animation: bounce-twice 1s ease-in-out 2;
+        }
+      `}</style>
     </div>
   )
 }
