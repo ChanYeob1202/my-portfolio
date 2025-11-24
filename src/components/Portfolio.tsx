@@ -1,7 +1,14 @@
-import React from 'react'
-
+interface Project {
+  title: string;
+  description: string;
+  status: string;
+  tech: string[];
+  image: string | null;
+  github: string | null;
+  demo: string | null;
+}
 export default function Portfolio() {
-  const projects = [
+  const projects: Project[] = [
     {
       title: "RNY Coffee Studio",
       description: "Modern, responsive website for a local coffee shop featuring menu displays, location information, and online ordering capabilities. Built with user experience and mobile-first design in mind.",
@@ -66,7 +73,7 @@ export default function Portfolio() {
               <div className="w-full md:w-1/2">
                 <div className="relative group">
                   {project.image ? (
-                    <div className="rounded-2xl overflow-hidden shadow-2xl border border-gray-200 bg-gradient-to-br from-gray-50 to-gray-100">
+                    <div className="rounded-2xl overflow-hidden shadow-2xl border border-gray-200 bg-linear-to-br from-gray-50 to-gray-100">
                       <img 
                         src={project.image} 
                         alt={project.title}
@@ -74,7 +81,7 @@ export default function Portfolio() {
                       />
                     </div>
                   ) : (
-                    <div className="rounded-2xl overflow-hidden shadow-2xl border border-gray-200 bg-gradient-to-br from-gray-100 to-gray-200 aspect-video flex items-center justify-center">
+                    <div className="rounded-2xl overflow-hidden shadow-2xl border border-gray-200 bg-linear-to-br from-gray-100 to-gray-200 aspect-video flex items-center justify-center">
                       <div className="text-center p-8">
                         <div className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-white/60 flex items-center justify-center">
                           <svg className="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

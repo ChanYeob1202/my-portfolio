@@ -1,7 +1,12 @@
-import React from 'react'
-
+interface Service {
+  title: string;
+  description: string;
+  skills: string; 
+}
 export default function About() {
-  const services = [
+
+
+  const services: Service[] = [
     {
       title: "Programming",
       description: "Building dynamic and interactive applications with modern JavaScript.",
@@ -55,7 +60,7 @@ export default function About() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 mb-12 max-w-5xl mx-auto">
           {/* Image 1 - 6xs.jpg (spans 2 columns) */}
           <div className="col-span-2 bg-white p-3 shadow-lg" style={{ transform: 'rotate(-0.5deg)' }}>
-            <img src="/img/about/6xs.jpg" alt="Profile" className="w-full aspect-[4/3] object-cover"/>
+            <img src="/img/about/6xs.jpg" alt="Profile" className="w-full aspect-4/3 object-cover"/>
           </div>
 
           {/* Image 2 - newyork1.jpg */}

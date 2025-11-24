@@ -1,12 +1,9 @@
-import React from 'react'
-import { FaGithub, FaLinkedinIn } from "react-icons/fa"
-
 export default function Hero() {
   return (
     <div 
-      id = "hero"      
+      id="hero"
       className="min-h-screen flex items-center justify-center bg-white"
-      >
+    >
       <div className="max-w-5xl mx-auto px-8 md:px-16 w-full text-center">
         
         {/* Main heading with embedded profile image*/}
@@ -31,7 +28,7 @@ export default function Hero() {
               I build
               <span className="inline-block bg-blue-600 rounded-full w-32 h-16 md:w-40 md:h-20 mx-2 relative overflow-hidden">
                 {/* Abstract decorative pattern */}
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500 via-blue-600 to-blue-800 opacity-80"></div>
+                <div className="absolute inset-0 bg-linear-to-br from-blue-500 via-blue-600 to-blue-800 opacity-80"></div>
                 <div className="absolute inset-0" style={{
                   backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(255,255,255,0.3) 0%, transparent 50%)',
                 }}></div>
@@ -72,24 +69,7 @@ export default function Hero() {
           </a>
           
         </div>
-        
       </div>
-
-      {/* Custom animation styles */}
-      <style jsx>{`
-        @keyframes bounce-twice {
-          0%, 100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(-15px);
-          }
-        }
-        
-        .animate-bounce-twice {
-          animation: bounce-twice 1s ease-in-out 2;
-        }
-      `}</style>
     </div>
   )
 }

@@ -42,3 +42,17 @@ body {
 .animation-delay-4000 {
   animation-delay: 4s;
 }
+
+/* Custom animation for Hero section */
+@keyframes bounce-twice {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+.animate-bounce-twice {
+  animation: bounce-twice 1s ease-in-out 2;
+}
