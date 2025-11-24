@@ -1,10 +1,9 @@
-import React from 'react'
 import { TfiEmail } from "react-icons/tfi"
 import { FaGithub, FaLinkedinIn } from "react-icons/fa"
 
 export default function Contact() {
   return (
-    <section id="contact" className="min-h-screen bg-gradient-to-br from-gray-50 to-white py-20 flex items-center relative overflow-hidden">
+    <section id="contact" className="min-h-screen bg-linear-to-br from-gray-50 to-white py-20 flex items-center relative overflow-hidden">
       {/* Decorative background elements */}
       <div className="absolute top-20 left-10 w-72 h-72 bg-orange-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob"></div>
       <div className="absolute top-40 right-10 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-2000"></div>
@@ -71,7 +70,7 @@ export default function Contact() {
         </div>
 
         {/* CTA Section */}
-        <div className="bg-gradient-to-r from-orange-400 to-blue-600 rounded-2xl p-8 md:p-12 text-white shadow-xl">
+        <div className="bg-linear-to-r from-orange-400 to-blue-600 rounded-2xl p-8 md:p-12 text-white shadow-xl">
           <h3 className="text-2xl md:text-3xl font-bold mb-4">
             Looking for a Front-End Developer?
           </h3>
@@ -93,33 +92,6 @@ export default function Contact() {
           </p>
         </div>
       </div>
-
-      {/* Custom animations */}
-      <style jsx>{`
-        @keyframes blob {
-          0%, 100% {
-            transform: translate(0, 0) scale(1);
-          }
-          33% {
-            transform: translate(30px, -50px) scale(1.1);
-          }
-          66% {
-            transform: translate(-20px, 20px) scale(0.9);
-          }
-        }
-        
-        .animate-blob {
-          animation: blob 7s infinite;
-        }
-        
-        .animation-delay-2000 {
-          animation-delay: 2s;
-        }
-        
-        .animation-delay-4000 {
-          animation-delay: 4s;
-        }
-      `}</style>
     </section>
   )
 }

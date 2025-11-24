@@ -3,21 +3,21 @@ import React from 'react'
 export default function Portfolio() {
   const projects = [
     {
+      title: "RNY Coffee Studio",
+      description: "Modern, responsive website for a local coffee shop featuring menu displays, location information, and online ordering capabilities. Built with user experience and mobile-first design in mind.",
+      status: "Active", 
+      tech: ["React", "Bootstrap", "CSS"],
+      image: "/img/portfolio/rny.jpg",
+      github: "https://github.com/ChanYeob1202/RNY-Studio-Coffee",
+      demo: "http://rnycoffeestudio.com"
+    },
+    {
       title: "Unroasted",
-      description: "A community-driven platform for coffee enthusiasts to share brewing techniques, reviews, and connect with local roasters. Features user profiles, discussion forums, and a coffee bean database.",
-      status: "In Development",
+      description: "A coffee blog and community-driven platform where coffee enthusiasts can share their experiences, brewing techniques, and reviews. Connect with fellow coffee lovers and discover new ways to enjoy your daily cup.",
+      status: "Active",
       tech: ["React", "Firebase", "Tailwind CSS"],
       image: "/img/portfolio/unRoasted.jpg",
       github: "https://github.com/ChanYeob1202/Unroasted",
-      demo: null
-    },
-    {
-      title: "RNY Coffee Studio",
-      description: "Modern, responsive website for a local coffee shop featuring menu displays, location information, and online ordering capabilities. Built with user experience and mobile-first design in mind.",
-      status: "In Development", 
-      tech: ["React", "Bootstrap", "CSS"],
-      image: "/img/portfolio/rny.jpg",
-      github: "https://github.com/ChanYeob1202",
       demo: null
     },
     {
@@ -30,15 +30,15 @@ export default function Portfolio() {
       demo: null
     },
     {
-      title: "YouTube Clone",
-      description: "A modern, responsive portfolio website showcasing my web development journey, projects, and skills. Built with React and Tailwind CSS, featuring smooth animations and clean design.",
-      status: "Active",
-      tech: ["React", "Tailwind CSS", "Vite"],
+      title: "bySide",
+      description: "A daily support community for people going through mental health challenges. Features daily action challenges, peer support, and healing resources. You're not alone—we're by your side.",
+      status: "In Development",
+      tech: ["React", "Firebase", "Tailwind CSS"],
       image: null,
       github: "https://github.com/ChanYeob1202",
-      demo: "#"
+      demo: null
     }
-  ];
+  ]
 
   return (
     <section id="portfolio" className="min-h-screen bg-white py-20">
