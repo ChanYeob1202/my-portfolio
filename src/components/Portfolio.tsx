@@ -10,6 +10,15 @@ interface Project {
 export default function Portfolio() {
   const projects: Project[] = [
     {
+      title: "YouTube Clone",
+      description: "A fully functional YouTube clone with video playback, search functionality, and responsive design. Features include video recommendations, channel pages, and a modern UI that mimics YouTube's user experience.",
+      status: "Active",
+      tech: ["Next.js", "TypeScript", "Tailwind CSS"],
+      image: null,
+      github: "https://github.com/ChanYeob1202/youtube-clone",
+      demo: null
+    },
+    {
       title: "RNY Coffee Studio",
       description: "Modern, responsive website for a local coffee shop featuring menu displays, location information, and online ordering capabilities. Built with user experience and mobile-first design in mind.",
       status: "Active", 

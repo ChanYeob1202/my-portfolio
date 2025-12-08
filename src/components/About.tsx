@@ -5,12 +5,11 @@ interface Service {
 }
 export default function About() {
 
-
   const services: Service[] = [
     {
       title: "Programming",
-      description: "Building dynamic and interactive applications with modern JavaScript.",
-      skills: "JavaScript",
+      description: "Building dynamic and interactive applications with modern JavaScript and TypeScript.",
+      skills: "JavaScript, TypeScript",
     },
     {
       title: "Web & Database",
@@ -19,16 +18,16 @@ export default function About() {
     },
     {
       title: "Frameworks",
-      description: "Developing scalable applications using Bootstrap, React.JS, and Express.js.",
-      skills: "Bootstrap, React.JS, Express.js",
+      description: "Developing scalable applications using modern frameworks and libraries.",
+      skills: "React.JS, Next.js, Bootstrap, Express.js",
     },
     {
       title: "Tech",
       description: "Streamlining workflow with Git version control and modern development tools.",
       skills: "Git, Visual Studio, Cursor",
     }
-  ];
-
+  ]
+  
   return (
     <section id="about" className="min-h-screen  py-16 md:py-24 relative overflow-hidden">
       {/* Paper texture overlay */}
