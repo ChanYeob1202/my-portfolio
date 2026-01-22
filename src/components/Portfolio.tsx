@@ -20,7 +20,7 @@ export default function Portfolio() {
     },
     {
       title: "RNY Coffee Studio",
-      description: "Modern, responsive website for a local coffee shop featuring menu displays, location information, and online ordering capabilities. Built with user experience and mobile-first design in mind.",
+      description: "Official mobile-first website for a local coffee shop showcasing brand philosophy, key info (location/contact), and a clear path to online ordering. Built with React and optimized using Lighthouse audits; includes GA4 event tracking for key actions like “Order Online” clicks and accessibility improvements for icon-based navigation.",
       status: "Active", 
       tech: ["React", "Bootstrap", "CSS"],
       image: "/img/portfolio/rny.jpg",
