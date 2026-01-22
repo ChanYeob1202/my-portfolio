@@ -33,7 +33,7 @@ export default function Hero() {
                   backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(255,255,255,0.3) 0%, transparent 50%)',
                 }}></div>
               </span>
-              stuff
+              products
             </span>
           </h1>
         </div>
@@ -62,10 +62,17 @@ export default function Hero() {
             LinkedIn
           </a>
           <a 
-            href="https://github.com/ChanYeob1202" 
+            href= "https://github.com/ChanYeob1202" 
             className="px-4 py-2 border-2 border-gray-400 rounded-full text-sm text-gray-700 hover:border-gray-600 hover:bg-gray-100 transition"
           >
             GitHub
+          </a>
+          <a 
+            href="/documents/resume.pdf" 
+            className="px-4 py-2 border-2 border-gray-400 rounded-full text-sm text-gray-700 hover:border-gray-600 hover:bg-gray-100 transition"
+            download
+          >
+            Resume
           </a>
           
         </div>

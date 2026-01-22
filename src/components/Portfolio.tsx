@@ -11,11 +11,11 @@ export default function Portfolio() {
   const projects: Project[] = [
     {
       title: "YouTube Clone",
-      description: "A fully functional YouTube clone with video playback, search functionality, and responsive design. Features include video recommendations, channel pages, and a modern UI that mimics YouTube's user experience.",
+      description: "Responsive video platform with video playback, search functionality, and responsive design. Features include video recommendations, channel pages, and a modern UI that mimics YouTube's user experience.",
       status: "Active",
       tech: ["Next.js", "TypeScript", "Tailwind CSS"],
       image: null,
-      github: "https://github.com/ChanYeob1202/youtube-clone",
+      github: "https://github.com/ChanYeob1202/youtube_clone",
       demo: null
     },
     {
@@ -34,24 +34,24 @@ export default function Portfolio() {
       tech: ["React", "Firebase", "Tailwind CSS"],
       image: "/img/portfolio/unRoasted.jpg",
       github: "https://github.com/ChanYeob1202/Unroasted",
-      demo: null
+      demo: "https://unroasted.vercel.app/"
     },
-    {
-      title: "birdEar",
-      description: "A review management platform helping small businesses monitor and respond to Google reviews efficiently. Streamlines customer feedback tracking and improves online reputation management.",
-      status: "In Development",
-      tech: ["React", "Firebase", "API Integration"],
-      image: null,
-      github: "https://github.com/ChanYeob1202/birdear",
-      demo: null
-    },
+    // {
+    //   title: "birdEar",
+    //   description: "A review management platform helping small businesses monitor and respond to Google reviews efficiently. Streamlines customer feedback tracking and improves online reputation management.",
+    //   status: "In Development",
+    //   tech: ["React", "Firebase", "API Integration"],
+    //   image: null,
+    //   github: "https://github.com/ChanYeob1202/birdear",
+    //   demo: null
+    // },
     {
       title: "bySide",
       description: "A daily support community for people going through mental health challenges. Features daily action challenges, peer support, and healing resources. You're not alone—we're by your side.",
       status: "In Development",
       tech: ["React", "Firebase", "Tailwind CSS"],
       image: null,
-      github: "https://github.com/ChanYeob1202",
+      github: null,
       demo: null
     }
   ]
