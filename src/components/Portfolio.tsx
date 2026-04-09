@@ -1,61 +1,6 @@
-interface Project {
-  title: string;
-  description: string;
-  status: string;
-  tech: string[];
-  image: string | null;
-  github: string | null;
-  demo: string | null;
-}
-export default function Portfolio() {
-  const projects: Project[] = [
-    {
-      title: "YouTube Clone",
-      description: "Responsive video platform with video playback, search functionality, and responsive design. Features include video recommendations, channel pages, and a modern UI that mimics YouTube's user experience.",
-      status: "Active",
-      tech: ["Next.js", "TypeScript", "Tailwind CSS"],
-      image: null,
-      github: "https://github.com/ChanYeob1202/youtube_clone",
-      demo: null
-    },
-    {
-      title: "RNY Coffee Studio",
-      description: "Official mobile-first website for a local coffee shop showcasing brand philosophy, key info (location/contact), and a clear path to online ordering. Built with React and optimized using Lighthouse audits; includes GA4 event tracking for key actions like “Order Online” clicks and accessibility improvements for icon-based navigation.",
-      status: "Active", 
-      tech: ["React", "Bootstrap", "CSS"],
-      image: "/img/portfolio/rny.jpg",
-      github: "https://github.com/ChanYeob1202/RNY-Studio-Coffee",
-      demo: "http://rnycoffeestudio.com"
-    },
-    {
-      title: "Unroasted",
-      description: "A coffee blog and community-driven platform where coffee enthusiasts can share their experiences, brewing techniques, and reviews. Connect with fellow coffee lovers and discover new ways to enjoy your daily cup.",
-      status: "Active",
-      tech: ["React", "Firebase", "Tailwind CSS"],
-      image: "/img/portfolio/unRoasted.jpg",
-      github: "https://github.com/ChanYeob1202/Unroasted",
-      demo: "https://unroasted.vercel.app/"
-    },
-    // {
-    //   title: "birdEar",
-    //   description: "A review management platform helping small businesses monitor and respond to Google reviews efficiently. Streamlines customer feedback tracking and improves online reputation management.",
-    //   status: "In Development",
-    //   tech: ["React", "Firebase", "API Integration"],
-    //   image: null,
-    //   github: "https://github.com/ChanYeob1202/birdear",
-    //   demo: null
-    // },
-    {
-      title: "bySide",
-      description: "A daily support community for people going through mental health challenges. Features daily action challenges, peer support, and healing resources. You're not alone—we're by your side.",
-      status: "In Development",
-      tech: ["React", "Firebase", "Tailwind CSS"],
-      image: null,
-      github: null,
-      demo: null
-    }
-  ]
+import { portfolioProjects } from "../data/portfolioProjects";
 
+export default function Portfolio() {
   return (
     <section id="portfolio" className="min-h-screen bg-white py-20">
       <div className="max-w-7xl mx-auto px-8 md:px-16 w-full">
@@ -71,7 +16,7 @@ export default function Portfolio() {
         
         {/* Projects - Alternating Layout */}
         <div className="space-y-32">
-          {projects.map((project, index) => (
+          {portfolioProjects.map((project, index) => (
             <div 
               key={index}
               className={`flex flex-col ${
