@@ -8,32 +8,31 @@ export default function Hero() {
         
         {/* Main heading with embedded profile image*/}
         <div className="mb-12">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-gray-700 leading-tight">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-700 leading-tight">
             {/* First line with profile pic */}
-            <span className="inline-flex items-center flex-wrap justify-center gap-4">
-              Hello
-              <span className="inline-block bg-orange-400 rounded-full px-8 py-2 mx-2 animate-bounce-twice">
+            <span className="flex items-center flex-wrap justify-center gap-x-3 gap-y-2">
+              <span>Hello</span>
+              <span className="inline-block bg-orange-400 rounded-full px-5 py-1 animate-bounce-twice">
                 <img 
                   src="/img/profile.jpg"
                   alt="profile"
-                  className="w-16 h-16 md:w-24 md:h-24 rounded-full object-cover inline-block"
+                  className="w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 rounded-full object-cover inline-block"
                 />
               </span>
-              I'm Michael
+              <span>I'm Michael</span>
             </span>
-            <br />
 
             {/* Second line with decorative element */}
-            <span className="inline-flex items-center flex-wrap justify-center gap-4 mt-4">
-              I build
-              <span className="inline-block bg-blue-600 rounded-full w-32 h-16 md:w-40 md:h-20 mx-2 relative overflow-hidden">
+            <span className="flex items-center flex-wrap justify-center gap-x-3 gap-y-2 mt-3 md:mt-4">
+              <span>I build</span>
+              <span className="inline-block bg-blue-600 rounded-full w-24 h-12 md:w-32 md:h-16 lg:w-36 lg:h-18 relative overflow-hidden">
                 {/* Abstract decorative pattern */}
                 <div className="absolute inset-0 bg-linear-to-br from-blue-500 via-blue-600 to-blue-800 opacity-80"></div>
                 <div className="absolute inset-0" style={{
                   backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(255,255,255,0.3) 0%, transparent 50%)',
                 }}></div>
               </span>
-              products
+              <span>products</span>
             </span>
           </h1>
         </div>
@@ -41,13 +40,13 @@ export default function Hero() {
         {/* Description paragraph */}
         <div className="max-w-3xl mx-auto mb-8 space-y-4">
           <p className="text-base md:text-lg md:font-semibold text-gray-700 leading-relaxed">
-            Front-end developer building code to help my community and influence positive change 
-            through thoughtful web applications.
+            Full-Stack Developer building web applications that strengthen communities 
+            and drive real impact.
           </p>
           <p className="text-base md:text-lg md:font-semibold text-gray-700 leading-relaxed">
-            From managing a coffee shop to managing codebases—I bring problem-solving skills and a 
-            user-first mindset to every project. I'm passionate about creating digital experiences 
-            that empower people, strengthen communities, and drive meaningful impact.
+            From managing a coffee shop to managing codebases — I bring a user-first mindset 
+            and hands-on problem-solving to everything I build. I specialize in React, Next.js, 
+            Node.js, and PostgreSQL.
           </p>
           <p className="text-base md:text-lg md:font-semibold text-gray-700 leading-relaxed">
             Open to opportunities. Let's build something great together.

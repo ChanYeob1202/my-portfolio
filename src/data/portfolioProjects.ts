@@ -9,15 +9,7 @@ export interface PortfolioProject {
 }
 
 export const portfolioProjects: PortfolioProject[] = [
-  // {
-  //   title: "YouTube Clone",
-  //   description: "Responsive video platform with video playback, search functionality, and responsive design. Features include video recommendations, channel pages, and a modern UI that mimics YouTube's user experience.",
-  //   status: "Active",
-  //   tech: ["Next.js", "TypeScript", "Tailwind CSS"],
-  //   image: null,
-  //   github: "https://github.com/ChanYeob1202/youtube_clone",
-  //   demo: null
-  // },
+
   {
     title: "Unroasted",
     description:
@@ -27,6 +19,34 @@ export const portfolioProjects: PortfolioProject[] = [
     image: "/img/portfolio/unRoasted.jpg",
     github: "https://github.com/ChanYeob1202/Unroasted",
     demo: "https://unroasted.vercel.app/"
+  },
+  {
+    title: "Job Tracker App",
+    description:
+      "A full-stack job application tracking platform with a separate Next.js frontend and Express/Node.js backend communicating via a RESTful API. Designed and implemented a PostgreSQL schema on Neon to store job listings with status tracking (Applied, Interview, Offer, Rejected). Full CRUD lets users add, edit, delete, and filter job entries through a responsive, mobile-first UI, with clean client/server separation — Next.js handles UI and routing, Express handles API logic and database queries.",
+    status: "In Development",
+    tech: [
+      "Next.js",
+      "TypeScript",
+      "Node.js",
+      "Express",
+      "PostgreSQL",
+      "Neon",
+      "Tailwind CSS"
+    ],
+    image: "/img/portfolio/job_application.png",
+    github: null,
+    demo: null
+  },
+  {
+    title: "Developer Portfolio Website",
+    description:
+      "This site — a personal developer portfolio with sections for about, skills, work, and contact. Built for fast loads and a polished, responsive layout with smooth motion and clear navigation so visitors can explore projects and reach out easily.",
+    status: "Active",
+    tech: ["React", "TypeScript", "Vite", "Tailwind CSS", "Framer Motion"],
+    image: "/img/developer_website.png",
+    github: "https://github.com/ChanYeob1202/my-portfolio",
+    demo: "https://michaelkimdev.com"
   },
   {
     title: "RNY Coffee Studio",
@@ -47,24 +67,15 @@ export const portfolioProjects: PortfolioProject[] = [
   //   github: "https://github.com/ChanYeob1202/birdear",
   //   demo: null
   // },
-  {
-    title: "bySide",
-    description:
-      "A daily support community for people going through mental health challenges. Features daily action challenges, peer support, and healing resources. You're not alone—we're by your side.",
-    status: "In Development",
-    tech: ["React", "Firebase", "Tailwind CSS"],
-    image: null,
-    github: null,
-    demo: null
-  },
-  {
-    title: "Developer Portfolio Website",
-    description:
-      "This site — a personal developer portfolio with sections for about, skills, work, and contact. Built for fast loads and a polished, responsive layout with smooth motion and clear navigation so visitors can explore projects and reach out easily.",
-    status: "Active",
-    tech: ["React", "TypeScript", "Vite", "Tailwind CSS", "Framer Motion"],
-    image: "/img/developer_website.png",
-    github: "https://github.com/ChanYeob1202/my-portfolio",
-    demo: "https://michaelkimdev.com"
-  }
+  // {
+  //   title: "bySide",
+  //   description:
+  //     "A daily support community for people going through mental health challenges. Features daily action challenges, peer support, and healing resources. You're not alone—we're by your side.",
+  //   status: "In Development",
+  //   tech: ["React", "Firebase", "Tailwind CSS"],
+  //   image: null,
+  //   github: null,
+  //   demo: null
+  // },
+
 ];

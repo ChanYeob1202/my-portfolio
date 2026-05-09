@@ -7,24 +7,24 @@ export default function About() {
 
   const services: Service[] = [
     {
-      title: "Programming",
-      description: "Building dynamic and interactive applications with modern JavaScript and TypeScript.",
-      skills: "JavaScript, TypeScript",
+      title: "Frontend",
+      description: "Building responsive, accessible interfaces with modern React-based frameworks and utility-first styling.",
+      skills: "React, Next.js, TypeScript, Tailwind CSS",
     },
     {
-      title: "Web & Database",
-      description: "Creating responsive and accessible web experiences with HTML and CSS.",
-      skills: "HTML, CSS",
+      title: "Backend",
+      description: "Designing RESTful APIs and server logic with Node.js and Express to power full-stack applications.",
+      skills: "Node.js, Express, REST APIs",
     },
     {
-      title: "Frameworks",
-      description: "Developing scalable applications using modern frameworks and libraries.",
-      skills: "React.JS, Next.js, Bootstrap, Express.js",
+      title: "Database",
+      description: "Modeling and querying relational data with PostgreSQL hosted on Neon for scalable, cloud-native storage.",
+      skills: "PostgreSQL, Neon, SQL",
     },
     {
-      title: "Tech",
-      description: "Streamlining workflow with Git version control and modern development tools.",
-      skills: "Git, Visual Studio, Cursor",
+      title: "Tools",
+      description: "Shipping and collaborating with modern dev tools, version control, and cloud deployment platforms.",
+      skills: "Git, GitHub, Vercel, Cursor",
     }
   ]
   
@@ -139,13 +139,13 @@ export default function About() {
                 {/* Tape effect at top */}
                 <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 w-20 h-6 bg-white/60 border border-gray-300 shadow-sm"></div>
                 
-                <h3 className="text-xl font-bold text-gray-800 mb-2 border-b-2 border-gray-600 pb-1">
+                <h3 className="text-2xl md:text-3xl font-bold text-gray-800 mb-3 border-b-2 border-gray-600 pb-1">
                   {item.title}
                 </h3>
-                <p className="text-gray-700 text-sm leading-relaxed mb-3">
+                <p className="text-gray-700 text-lg md:text-xl leading-relaxed mb-4">
                   {item.description}
                 </p>
-                <p className="text-gray-600 text-xs font-semibold">
+                <p className="text-gray-800 text-base md:text-lg font-bold">
                   {item.skills}
                 </p>
               </div>
