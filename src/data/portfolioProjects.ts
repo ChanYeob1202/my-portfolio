@@ -6,10 +6,30 @@ export interface PortfolioProject {
   image: string | null;
   github: string | null;
   demo: string | null;
+  /** Optional heads-up shown under the demo link, e.g. free-tier cold-start warning. */
+  note?: string;
 }
 
 export const portfolioProjects: PortfolioProject[] = [
-
+  {
+    title: "Landr",
+    description:
+      "A full-stack job application tracking platform with a separate Next.js frontend and Express/Node.js backend communicating via a RESTful API. Designed and implemented a PostgreSQL schema on Neon to store job listings with status tracking (Applied, Interview, Offer, Rejected). Includes JWT-based authentication (sign up / sign in with bcrypt-hashed passwords) so each user only sees their own jobs. Full CRUD lets users add, edit, delete, and filter job entries through a responsive, mobile-first UI, with clean client/server separation — Next.js handles UI and routing, Express handles API logic and database queries.",
+    status: "Active",
+    tech: [
+      "Next.js",
+      "TypeScript",
+      "Node.js",
+      "Express",
+      "PostgreSQL",
+      "Neon",
+      "Tailwind CSS"
+    ],
+    image: "/img/portfolio/landr.jpg",
+    github: "https://github.com/ChanYeob1202/job-tracker",
+    demo: "https://landr.land",
+    note: "Hosted on a free tier — the first load may take ~30–60s while the server wakes from sleep."
+  },
   {
     title: "Unroasted",
     description:
@@ -21,30 +41,12 @@ export const portfolioProjects: PortfolioProject[] = [
     demo: "https://unroasted.vercel.app/"
   },
   {
-    title: "Job Tracker App",
-    description:
-      "A full-stack job application tracking platform with a separate Next.js frontend and Express/Node.js backend communicating via a RESTful API. Designed and implemented a PostgreSQL schema on Neon to store job listings with status tracking (Applied, Interview, Offer, Rejected). Full CRUD lets users add, edit, delete, and filter job entries through a responsive, mobile-first UI, with clean client/server separation — Next.js handles UI and routing, Express handles API logic and database queries.",
-    status: "In Development",
-    tech: [
-      "Next.js",
-      "TypeScript",
-      "Node.js",
-      "Express",
-      "PostgreSQL",
-      "Neon",
-      "Tailwind CSS"
-    ],
-    image: "/img/portfolio/job_application.png",
-    github: null,
-    demo: null
-  },
-  {
     title: "Developer Portfolio Website",
     description:
       "This site — a personal developer portfolio with sections for about, skills, work, and contact. Built for fast loads and a polished, responsive layout with smooth motion and clear navigation so visitors can explore projects and reach out easily.",
     status: "Active",
     tech: ["React", "TypeScript", "Vite", "Tailwind CSS", "Framer Motion"],
-    image: "/img/developer_website.png",
+    image: "/img/portfolio/portfolio.jpg",
     github: "https://github.com/ChanYeob1202/my-portfolio",
     demo: "https://michaelkimdev.com"
   },

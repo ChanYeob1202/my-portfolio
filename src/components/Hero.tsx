@@ -60,20 +60,12 @@ export default function Hero() {
           >
             LinkedIn
           </a>
-          <a 
-            href= "https://github.com/ChanYeob1202" 
+          <a
+            href= "https://github.com/ChanYeob1202"
             className="px-4 py-2 border-2 border-gray-400 rounded-full text-sm text-gray-700 hover:border-gray-600 hover:bg-gray-100 transition"
           >
             GitHub
           </a>
-          <a 
-            href="/documents/resume.pdf" 
-            className="px-4 py-2 border-2 border-gray-400 rounded-full text-sm text-gray-700 hover:border-gray-600 hover:bg-gray-100 transition"
-            download
-          >
-            Resume
-          </a>
-          
         </div>
       </div>
     </div>
