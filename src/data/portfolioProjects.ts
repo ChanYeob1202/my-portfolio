@@ -4,6 +4,7 @@ export interface PortfolioProject {
   status: string;
   tech: string[];
   image: string | null;
+  images?: string[];
   github: string | null;
   demo: string | null;
   /** Optional heads-up shown under the demo link, e.g. free-tier cold-start warning. */
@@ -26,6 +27,7 @@ export const portfolioProjects: PortfolioProject[] = [
       "Tailwind CSS"
     ],
     image: "/img/portfolio/landr.jpg",
+    images: ["/img/portfolio/landr.jpg", "/img/portfolio/landr2.jpg"],
     github: "https://github.com/ChanYeob1202/job-tracker",
     demo: "https://landr.land",
     note: "Hosted on a free tier — the first load may take ~30–60s while the server wakes from sleep."

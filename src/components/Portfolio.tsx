@@ -1,6 +1,18 @@
+import { useState } from "react";
 import { portfolioProjects } from "../data/portfolioProjects";
 
 export default function Portfolio() {
+  const [activeImages, setActiveImages] = useState<Record<number, number>>({});
+
+  const getActiveIndex = (projectIndex: number) => activeImages[projectIndex] ?? 0;
+
+  const navigate = (projectIndex: number, direction: 1 | -1, total: number) => {
+    setActiveImages(prev => ({
+      ...prev,
+      [projectIndex]: ((getActiveIndex(projectIndex) + direction) + total) % total,
+    }));
+  };
+
   return (
     <section id="portfolio" className="min-h-screen bg-white py-20">
       <div className="max-w-7xl mx-auto px-8 md:px-16 w-full">
@@ -26,10 +38,48 @@ export default function Portfolio() {
               {/* Project Image */}
               <div className="w-full md:w-1/2">
                 <div className="relative group">
-                  {project.image ? (
+                  {project.images && project.images.length > 1 ? (
+                    <div className="rounded-2xl overflow-hidden shadow-2xl border border-gray-200 bg-linear-to-br from-gray-50 to-gray-100 relative">
+                      <img
+                        src={project.images[getActiveIndex(index)]}
+                        alt={`${project.title} screenshot ${getActiveIndex(index) + 1}`}
+                        className="w-full h-auto object-cover transition-opacity duration-300"
+                      />
+                      {/* Arrows */}
+                      <button
+                        onClick={() => navigate(index, -1, project.images!.length)}
+                        className="absolute left-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full w-9 h-9 flex items-center justify-center transition-colors"
+                        aria-label="Previous image"
+                      >
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                        </svg>
+                      </button>
+                      <button
+                        onClick={() => navigate(index, 1, project.images!.length)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full w-9 h-9 flex items-center justify-center transition-colors"
+                        aria-label="Next image"
+                      >
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </button>
+                      {/* Dots */}
+                      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2">
+                        {project.images.map((_, i) => (
+                          <button
+                            key={i}
+                            onClick={() => setActiveImages(prev => ({ ...prev, [index]: i }))}
+                            className={`w-2 h-2 rounded-full transition-colors ${i === getActiveIndex(index) ? "bg-white" : "bg-white/40"}`}
+                            aria-label={`Go to image ${i + 1}`}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  ) : project.image ? (
                     <div className="rounded-2xl overflow-hidden shadow-2xl border border-gray-200 bg-linear-to-br from-gray-50 to-gray-100">
-                      <img 
-                        src={project.image} 
+                      <img
+                        src={project.image}
                         alt={project.title}
                         className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-500"
                       />
