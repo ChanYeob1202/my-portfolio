@@ -121,7 +121,24 @@ export default function Portfolio() {
                     {project.description}
                   </p>
                 </div>
-                
+
+                {/* Real-world results */}
+                {project.metrics && (
+                  <div>
+                    <div className="grid grid-cols-3 gap-3">
+                      {project.metrics.map((metric, i) => (
+                        <div key={i} className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-3">
+                          <p className="text-2xl md:text-3xl font-bold text-gray-900">{metric.value}</p>
+                          <p className="text-xs md:text-sm text-gray-600 leading-snug mt-1">{metric.label}</p>
+                        </div>
+                      ))}
+                    </div>
+                    {project.metricsSource && (
+                      <p className="text-xs text-gray-400 mt-2">{project.metricsSource}</p>
+                    )}
+                  </div>
+                )}
+
                 {/* Tech Stack */}
                 <div className="flex flex-wrap gap-3">
                   {project.tech.map((tech, i) => (

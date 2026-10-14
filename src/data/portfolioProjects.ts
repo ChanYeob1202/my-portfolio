@@ -9,6 +9,10 @@ export interface PortfolioProject {
   demo: string | null;
   /** Optional heads-up shown under the demo link, e.g. free-tier cold-start warning. */
   note?: string;
+  /** Optional real-world results, e.g. analytics numbers. */
+  metrics?: { value: string; label: string }[];
+  /** Source / timeframe caption shown under the metrics. */
+  metricsSource?: string;
 }
 
 export const portfolioProjects: PortfolioProject[] = [
@@ -33,6 +37,22 @@ export const portfolioProjects: PortfolioProject[] = [
     note: "Hosted on a free tier — the first load may take ~30–60s while the server wakes from sleep."
   },
   {
+    title: "RNY Coffee Studio",
+    description:
+      "Official mobile-first website for a local coffee shop showcasing brand philosophy, key info (location/contact), and a clear path to online ordering. Built with React and optimized using Lighthouse audits; includes GA4 event tracking for key actions like “Order Online” clicks and accessibility improvements for icon-based navigation.",
+    status: "Active",
+    tech: ["React", "Bootstrap", "CSS"],
+    image: "/img/portfolio/rny.jpg",
+    github: "https://github.com/ChanYeob1202/RNY-Studio-Coffee",
+    demo: "http://rnycoffeestudio.com",
+    metrics: [
+      { value: "4.5K+", label: "Visitors" },
+      { value: "2.4K+", label: "Clicked “Order Online”" },
+      { value: "54%", label: "Visitor-to-order-click rate" }
+    ],
+    metricsSource: "Google Analytics 4 · Feb – Oct 2026"
+  },
+  {
     title: "Unroasted",
     description:
       "A coffee blog and community-driven platform where coffee enthusiasts can share their experiences, brewing techniques, and reviews. Connect with fellow coffee lovers and discover new ways to enjoy your daily cup.",
@@ -51,16 +71,6 @@ export const portfolioProjects: PortfolioProject[] = [
     image: "/img/portfolio/portfolio.jpg",
     github: "https://github.com/ChanYeob1202/my-portfolio",
     demo: "https://michaelkimdev.com"
-  },
-  {
-    title: "RNY Coffee Studio",
-    description:
-      "Official mobile-first website for a local coffee shop showcasing brand philosophy, key info (location/contact), and a clear path to online ordering. Built with React and optimized using Lighthouse audits; includes GA4 event tracking for key actions like “Order Online” clicks and accessibility improvements for icon-based navigation.",
-    status: "Active",
-    tech: ["React", "Bootstrap", "CSS"],
-    image: "/img/portfolio/rny.jpg",
-    github: "https://github.com/ChanYeob1202/RNY-Studio-Coffee",
-    demo: "http://rnycoffeestudio.com"
   },
   // {
   //   title: "birdEar",
