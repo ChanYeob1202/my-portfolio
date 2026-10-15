@@ -8,23 +8,23 @@ export default function About() {
   const services: Service[] = [
     {
       title: "Frontend",
-      description: "Building responsive, accessible interfaces with modern React-based frameworks and utility-first styling.",
+      description: "Building responsive React interfaces and checking that they're fast. After a Lighthouse audit I cut a 3 MB image to 34 KB, and I use optimistic updates that roll back if a request fails.",
       skills: "React, Next.js, TypeScript, Tailwind CSS",
     },
     {
       title: "Backend",
-      description: "Designing RESTful APIs and server logic with Node.js and Express to power full-stack applications.",
-      skills: "Node.js, Express, REST APIs",
+      description: "Building REST APIs with Node.js and Express, with JWT authentication and bcrypt-hashed passwords. When a login bug hid from every tool, I wrote my own logging middleware to find it.",
+      skills: "Node.js, Express, REST APIs, JWT Auth",
     },
     {
       title: "Database",
-      description: "Modeling and querying relational data with PostgreSQL hosted on Neon for scalable, cloud-native storage.",
+      description: "Designing PostgreSQL tables and writing safe queries: every query is parameterized and scoped to the logged-in user, so no one can read someone else's data.",
       skills: "PostgreSQL, Neon, SQL",
     },
     {
       title: "Tools",
-      description: "Shipping and collaborating with modern dev tools, version control, and cloud deployment platforms.",
-      skills: "Git, GitHub, Vercel, Cursor",
+      description: "Shipping with Git and cloud deploys, then measuring the result. I add Google Analytics 4 events to see whether a feature is actually used.",
+      skills: "Git, GitHub, Vercel, Netlify, GA4",
     }
   ]
   
@@ -102,20 +102,20 @@ export default function About() {
             
             <div className="space-y-4 text-gray-700 text-base md:text-lg leading-relaxed">
               <p>
-                My journey into web development started behind an espresso machine. As a barista, 
-                I was passionate about coffee and wanted to share that knowledge with others, so I 
-                built my own coffee community website—and that's when I fell in love with coding.
+                I started as a barista and became a manager at RNY Coffee Studio. That job taught me
+                how I like to work: notice a real problem, try a fix, and check whether it actually helped.
               </p>
               <p>
-                What began as a simple project turned into a full-blown passion. When I became a manager 
-                at the coffee shop, I took on building a website for the business, diving deeper into 
-                web development and discovering how powerful it is to create digital experiences that 
-                bring people together.
+                My first projects came from problems at the café. Training new baristas was repetitive,
+                so I built Unroasted, a training and community platform. The café's website loaded slowly
+                and no one knew if it brought in orders, so I optimized it and added analytics. Now more
+                than half of all visitors click through to order.
               </p>
               <p>
-                Now, I combine my love for creating meaningful connections with my technical skills to 
-                build modern, user-friendly web applications. Whether it's a coffee community or a 
-                business website, I'm all about crafting experiences that matter.
+                Today I build full-stack apps with React, Node.js, Express, and PostgreSQL. In Landr, my job
+                search tool, I built REST APIs with JWT authentication, and I tracked down a login bug that
+                every debugging tool described differently. Those are the problems I enjoy most: finding the
+                real cause, not just the first answer.
               </p>
             </div>
           </div>

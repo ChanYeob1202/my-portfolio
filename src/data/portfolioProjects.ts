@@ -13,13 +13,43 @@ export interface PortfolioProject {
   metrics?: { value: string; label: string }[];
   /** Source / timeframe caption shown under the metrics. */
   metricsSource?: string;
+  /** Why it was built, what the problem was, how it was solved, and what came of it. */
+  caseStudy?: {
+    why: string;
+    problem: string;
+    solution: string[];
+    result: string[];
+  };
+  /** Planned next features, shown as a small "What's next" list under the result. */
+  next?: string[];
 }
 
 export const portfolioProjects: PortfolioProject[] = [
   {
     title: "Landr",
     description:
-      "A full-stack job application tracking platform with a separate Next.js frontend and Express/Node.js backend communicating via a RESTful API. Designed and implemented a PostgreSQL schema on Neon to store job listings with status tracking (Applied, Interview, Offer, Rejected). Includes JWT-based authentication (sign up / sign in with bcrypt-hashed passwords) so each user only sees their own jobs. Full CRUD lets users add, edit, delete, and filter job entries through a responsive, mobile-first UI, with clean client/server separation — Next.js handles UI and routing, Express handles API logic and database queries.",
+      "A full-stack job search tool I built for myself first, and redesigned after using it showed me it wasn't helping yet.",
+    caseStudy: {
+      why:
+        "I needed it for my own job search. Notion and Google Sheets can store a list of applications, but that's all they do: they're a data dump. I figured that if I needed something better, other job seekers did too, so I set out to build a real product around one question: how can a tool actually help people job hunt?",
+      problem:
+        "This was my first full-stack app, so there were plenty of technical problems, but the biggest one wasn't technical. After I deployed it and used it myself, I realized I had rebuilt the same data dump: it showed me a list of jobs I'd applied to and nothing more. The hardest technical problem came while wiring up login: every page returned \"401 token does not exist\", and every debugging tool told a different story. The browser console showed four errors, the Next.js overlay showed one, the Network tab showed no request at all, and the API server logged nothing.",
+      solution: [
+        "Went back and redesigned the MVP around what a job seeker actually needs to do next. I added a follow-up queue that flags applications where you haven't heard back from the company in a while, with a one-click \"mark as followed up\".",
+        "Debugged the 401 by treating each contradiction as a clue instead of guessing. The empty Network tab meant the request wasn't coming from the browser at all. Since the server logged nothing, I added my own logging middleware, which proved the Authorization header arrived as undefined.",
+        "That pointed to two wrong assumptions on my part. The page was a React Server Component, so its fetch ran on the Next.js server, where DevTools can't see it and localStorage, where the token lived, doesn't exist. And with JWTs it's the client, not the server, that holds and sends the token. I made the page a client component and attached the token explicitly.",
+        "Chose localStorage for the token on purpose for now: the frontend and API are on separate origins, and httpOnly cookies would need cross-origin cookie and CORS setup. I know the tradeoff (localStorage is exposed to XSS) and plan to move to httpOnly cookies.",
+        "Secured the data: bcrypt-hashed passwords, every /jobs query scoped by user_id, an allowlist of editable columns, and parameterized SQL. \"Not found\" and \"not yours\" return the same 404, so the API doesn't reveal which IDs exist.",
+        "Made \"mark as followed up\" an optimistic update that rolls back if the request fails, and fixed a bug where the follow-up logic wrote into the job object and corrupted the snapshot used for the rollback.",
+      ],
+      result: [
+        "Landr went from a list of applications to a tool that tells me who to follow up with. It's live at landr.land, and I use it for my own job search.",
+        "I learned to look at the big picture even when building a small feature: how each part connects, and whether it actually helps the user. I also learned that an empty log or an empty Network tab is evidence, not a dead end.",
+      ],
+    },
+    next: [
+      "AI job match: paste your resume and a job description, and get a fit score, whether it's worth applying, and the skills you're missing.",
+    ],
     status: "Active",
     tech: [
       "Next.js",
@@ -39,7 +69,27 @@ export const portfolioProjects: PortfolioProject[] = [
   {
     title: "RNY Coffee Studio",
     description:
-      "Official mobile-first website for a local coffee shop showcasing brand philosophy, key info (location/contact), and a clear path to online ordering. Built with React and optimized using Lighthouse audits; includes GA4 event tracking for key actions like “Order Online” clicks and accessibility improvements for icon-based navigation.",
+      "The official website for a specialty coffee shop in Koreatown, LA. A real client project with real traffic.",
+    caseStudy: {
+      why:
+        "I was working as a manager at RNY Coffee Studio. The café relied on Instagram and Google Maps, and online ordering lived on a separate Toast page that customers had to find on their own. The owner needed a website that turned visitors into orders.",
+      problem:
+        "Most visitors were on their phones and wanted three things fast: hours, location, and a way to order. The first version loaded slowly on mobile because of large, unoptimized images (one photo alone was 3 MB). And there was no way to tell whether the site was actually bringing in orders.",
+      solution: [
+        "Designed a mobile-first single page with an \"Order Online\" button in the hero that goes straight to Toast, plus location, hours, and a contact form.",
+        "Ran Lighthouse audits and fixed what they flagged: compressed images (the About photo went from 3 MB to 34 KB), lazy-loaded images below the fold, and set long-term cache headers on Netlify.",
+        "Added accessible names to icon-only links so screen readers can announce them.",
+        "Set up Google Analytics 4 with a custom order_online_click event, so the owner can see how many visitors go on to order.",
+        "Used that data to add a sticky \"Order Now\" bar on mobile, with UTM-tagged links that show which orders came from the website.",
+      ],
+      result: [
+        "Over 4,500 visitors and 2,400+ clicks on \"Order Online\" since launch. More than half of all visitors go on to the ordering page.",
+        "The owner now has real numbers showing what the website does for the business, instead of guessing.",
+      ],
+    },
+    next: [
+      "Our own online store, so the café can sell its own products directly on the website.",
+    ],
     status: "Active",
     tech: ["React", "Bootstrap", "CSS"],
     image: "/img/portfolio/rny.jpg",
@@ -55,9 +105,28 @@ export const portfolioProjects: PortfolioProject[] = [
   {
     title: "Unroasted",
     description:
-      "A coffee blog and community-driven platform where coffee enthusiasts can share their experiences, brewing techniques, and reviews. Connect with fellow coffee lovers and discover new ways to enjoy your daily cup.",
-    status: "Active",
-    tech: ["React", "Firebase", "Tailwind CSS"],
+      "A prototype coffee training and community platform, built to solve a problem I had as a café manager.",
+    caseStudy: {
+      why:
+        "As a manager at RNY Coffee Studio, I trained a new group of 5–10 baristas every few months, and I was explaining the same coffee basics over and over.",
+      problem:
+        "Training was repetitive and only happened in person. Once it ended, new baristas had nowhere to review what they'd learned or ask follow-up questions, and they couldn't learn from each other.",
+      solution: [
+        "Used Strapi as a headless CMS so a manager can write a training article once and publish it from any device, without touching code.",
+        "Built a community board on Firebase where baristas can post questions, reply, and like helpful answers, with real-time updates.",
+        "Added Firebase Authentication so every post is tied to a real account, which keeps discussions safe and accountable.",
+        "Kept two backends on purpose: Strapi for content managers edit, Firebase for content users create, each fitting its job.",
+      ],
+      result: [
+        "Built a working prototype: managers can publish training articles from any device, and trainees can ask questions on a real-time community board.",
+        "It's a prototype with two sample articles, not a finished product. What I took from it was how to split content between a CMS and a real-time database based on who creates it.",
+      ],
+    },
+    next: [
+      "Publish a full library of training articles, so new baristas can finish the theory part of their training entirely on the website.",
+    ],
+    status: "Prototype",
+    tech: ["React", "Strapi", "Firebase", "Tailwind CSS"],
     image: "/img/portfolio/unRoasted.jpg",
     github: "https://github.com/ChanYeob1202/Unroasted",
     demo: "https://unroasted.vercel.app/"
@@ -65,7 +134,22 @@ export const portfolioProjects: PortfolioProject[] = [
   {
     title: "Developer Portfolio Website",
     description:
-      "This site — a personal developer portfolio with sections for about, skills, work, and contact. Built for fast loads and a polished, responsive layout with smooth motion and clear navigation so visitors can explore projects and reach out easily.",
+      "This site. A portfolio built to show what my projects actually did, not just which tools they used.",
+    caseStudy: {
+      why:
+        "I needed one place where employers could see my work, try it live, and contact me.",
+      problem:
+        "My first version listed technologies for each project, which made every project sound the same. A reviewer skimming for 30 seconds couldn't tell what problem I'd solved or whether anyone used the result.",
+      solution: [
+        "Rewrote each project as a short case study: why I built it, what the problem was, how I solved it, and the result.",
+        "Added real numbers where I have them, like Google Analytics data for RNY Coffee Studio, and put the strongest projects first.",
+        "Kept project content in a typed data file, separate from the components, so adding or editing a project doesn't touch the UI code.",
+        "Built it with React, TypeScript, and Vite for fast loads, and a responsive layout that works on phones.",
+      ],
+      result: [
+        "A portfolio that tells the story behind each project in a few seconds of reading, with live demos and source code one click away.",
+      ],
+    },
     status: "Active",
     tech: ["React", "TypeScript", "Vite", "Tailwind CSS", "Framer Motion"],
     image: "/img/portfolio/portfolio.jpg",

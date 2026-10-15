@@ -1,8 +1,48 @@
 import { useState } from "react";
+import type { ReactNode } from "react";
 import { portfolioProjects } from "../data/portfolioProjects";
+
+// How many solution steps to show before the "Show all" button.
+const SOLUTION_PREVIEW = 3;
+
+const STEP_STYLES = {
+  problem: { dot: "bg-red-50 text-red-600 border-red-200", label: "text-red-600",
+    icon: "M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" },
+  solution: { dot: "bg-blue-50 text-blue-600 border-blue-200", label: "text-blue-600",
+    icon: "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" },
+  result: { dot: "bg-emerald-50 text-emerald-600 border-emerald-200", label: "text-emerald-600",
+    icon: "M5 13l4 4L19 7" },
+};
+
+// One step of the Problem → Solution → Result timeline: a colored icon,
+// a vertical line down to the next step, and the step's content.
+function StoryStep({ kind, label, last = false, children }: {
+  kind: keyof typeof STEP_STYLES; label: string; last?: boolean; children: ReactNode;
+}) {
+  const style = STEP_STYLES[kind];
+  return (
+    <div className="flex gap-4">
+      <div className="flex flex-col items-center">
+        <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border ${style.dot}`}>
+          <svg className="h-[18px] w-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={style.icon} />
+          </svg>
+        </div>
+        {!last && <div className="my-1.5 w-0.5 flex-1 bg-gray-200" />}
+      </div>
+      <div className={`min-w-0 flex-1 ${last ? "" : "pb-7"}`}>
+        <p className={`mt-1.5 mb-2 text-xs font-bold uppercase tracking-wider ${style.label}`}>{label}</p>
+        {children}
+      </div>
+    </div>
+  );
+}
 
 export default function Portfolio() {
   const [activeImages, setActiveImages] = useState<Record<number, number>>({});
+
+  // Which projects have their full solution list expanded.
+  const [openSolutions, setOpenSolutions] = useState<Record<number, boolean>>({});
 
   const getActiveIndex = (projectIndex: number) => activeImages[projectIndex] ?? 0;
 
@@ -33,10 +73,10 @@ export default function Portfolio() {
               key={index}
               className={`flex flex-col ${
                 index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
-              } gap-8 md:gap-12 items-center`}
+              } gap-8 md:gap-12 ${project.caseStudy ? 'items-start' : 'items-center'}`}
             >
-              {/* Project Image */}
-              <div className="w-full md:w-1/2">
+              {/* Project Image — sticks while the case study scrolls past */}
+              <div className={`w-full md:w-1/2 ${project.caseStudy ? 'md:sticky md:top-24' : ''}`}>
                 <div className="relative group">
                   {project.images && project.images.length > 1 ? (
                     <div className="rounded-2xl overflow-hidden shadow-2xl border border-gray-200 bg-linear-to-br from-gray-50 to-gray-100 relative">
@@ -111,33 +151,119 @@ export default function Portfolio() {
               </div>
               
               {/* Project Info */}
-              <div className="w-full md:w-1/2 space-y-6">
+              <div className="w-full md:w-1/2 min-w-0 space-y-6">
                 <div>
-                  <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                    {project.title}
-                  </h3>
-                  
+                  <div className="flex flex-wrap items-center gap-3 mb-3">
+                    <h3 className="text-3xl md:text-4xl font-bold text-gray-900">
+                      {project.title}
+                    </h3>
+                  </div>
                   <p className="text-gray-600 text-base md:text-lg leading-relaxed">
                     {project.description}
                   </p>
                 </div>
 
-                {/* Real-world results */}
-                {project.metrics && (
-                  <div>
-                    <div className="grid grid-cols-3 gap-3">
-                      {project.metrics.map((metric, i) => (
-                        <div key={i} className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-3">
-                          <p className="text-2xl md:text-3xl font-bold text-gray-900">{metric.value}</p>
-                          <p className="text-xs md:text-sm text-gray-600 leading-snug mt-1">{metric.label}</p>
+                {/* Impact: numbers first, so a reviewer sees the outcome right away */}
+                {(project.metrics || project.caseStudy) && (
+                  <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-5 space-y-3">
+                    <p className="text-xs font-bold uppercase tracking-wider text-emerald-700">Impact</p>
+                    {project.metrics ? (
+                      <>
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                          {project.metrics.map((metric, i) => (
+                            <div key={i} className="rounded-xl border border-emerald-200 bg-white px-4 py-3">
+                              <p className="text-2xl md:text-3xl font-extrabold text-emerald-600 tabular-nums">{metric.value}</p>
+                              <p className="text-xs md:text-sm text-gray-600 leading-snug mt-1">{metric.label}</p>
+                            </div>
+                          ))}
                         </div>
-                      ))}
-                    </div>
-                    {project.metricsSource && (
-                      <p className="text-xs text-gray-400 mt-2">{project.metricsSource}</p>
+                        {project.metricsSource && (
+                          <p className="text-xs text-gray-500">{project.metricsSource}</p>
+                        )}
+                      </>
+                    ) : (
+                      <p className="text-gray-900 font-semibold leading-relaxed">{project.caseStudy!.result[0]}</p>
                     )}
                   </div>
                 )}
+
+                {project.caseStudy && (() => {
+                  const cs = project.caseStudy;
+                  // If the first result is already shown in the Impact box, don't repeat it below.
+                  const results = project.metrics ? cs.result : cs.result.slice(1);
+                  const isOpen = openSolutions[index] ?? false;
+                  const visibleSteps = isOpen ? cs.solution : cs.solution.slice(0, SOLUTION_PREVIEW);
+
+                  return (
+                    <>
+                      {/* Why: context, styled quietly */}
+                      <p className="border-l-2 border-gray-200 pl-4 text-gray-600 leading-relaxed">
+                        <span className="font-semibold text-gray-900">Why I built it. </span>
+                        {cs.why}
+                      </p>
+
+                      {/* Problem → Solution → Result timeline */}
+                      <div>
+                        <StoryStep kind="problem" label="Problem">
+                          <p className="text-gray-700 leading-relaxed">{cs.problem}</p>
+                        </StoryStep>
+
+                        <StoryStep kind="solution" label="Solution" last={results.length === 0}>
+                          <ol className="space-y-3">
+                            {visibleSteps.map((step, i) => (
+                              <li key={i} className="flex gap-3 text-gray-700 leading-relaxed">
+                                <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-blue-50 text-xs font-bold text-blue-600">
+                                  {i + 1}
+                                </span>
+                                <span>{step}</span>
+                              </li>
+                            ))}
+                          </ol>
+                          {cs.solution.length > SOLUTION_PREVIEW && (
+                            <button
+                              type="button"
+                              onClick={() => setOpenSolutions(prev => ({ ...prev, [index]: !isOpen }))}
+                              aria-expanded={isOpen}
+                              className="mt-3 text-sm font-semibold text-blue-600 hover:text-blue-800"
+                            >
+                              {isOpen ? "Show less ↑" : `Show all ${cs.solution.length} steps ↓`}
+                            </button>
+                          )}
+                        </StoryStep>
+
+                        {results.length > 0 && (
+                          <StoryStep kind="result" label="Result" last>
+                            <ul className="space-y-2">
+                              {results.map((outcome, i) => (
+                                <li key={i} className="flex gap-3 text-gray-900 font-medium leading-relaxed">
+                                  <svg className="w-5 h-5 mt-0.5 shrink-0 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                                  </svg>
+                                  <span>{outcome}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </StoryStep>
+                        )}
+                      </div>
+
+                      {/* What's next: planned features, kept quiet so it doesn't compete with the results */}
+                      {project.next && project.next.length > 0 && (
+                        <div className="rounded-xl border border-dashed border-gray-300 bg-gray-50 px-4 py-3">
+                          <p className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-1.5">What's next</p>
+                          <ul className="space-y-1">
+                            {project.next.map((item, i) => (
+                              <li key={i} className="flex gap-2 text-sm text-gray-600 leading-relaxed">
+                                <span className="shrink-0 text-gray-400">→</span>
+                                <span>{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </>
+                  );
+                })()}
 
                 {/* Tech Stack */}
                 <div className="flex flex-wrap gap-3">
