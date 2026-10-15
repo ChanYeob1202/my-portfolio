@@ -1,3 +1,5 @@
+import { FaGithub, FaLinkedinIn } from "react-icons/fa"
+
 export default function Hero() {
   return (
     <div 
@@ -37,35 +39,76 @@ export default function Hero() {
           </h1>
         </div>
 
-        {/* Description paragraph */}
-        <div className="max-w-3xl mx-auto mb-8 space-y-4">
-          <p className="text-base md:text-lg md:font-semibold text-gray-700 leading-relaxed">
-            Full-Stack Developer building web applications that strengthen communities 
-            and drive real impact.
-          </p>
-          <p className="text-base md:text-lg md:font-semibold text-gray-700 leading-relaxed">
-            From managing a coffee shop to managing codebases — I bring a user-first mindset 
-            and hands-on problem-solving to everything I build. I specialize in React, Next.js, 
-            Node.js, and PostgreSQL.
-          </p>
-          <p className="text-base md:text-lg md:font-semibold text-gray-700 leading-relaxed">
-            Open to opportunities. Let's build something great together.
-          </p>
+        {/* Tagline */}
+        <p className="max-w-3xl mx-auto mb-10 text-xl md:text-2xl font-bold text-gray-900 leading-snug">
+          Full-Stack Developer who builds products real people use —{' '}
+          <span className="text-blue-600">and measures the results.</span>
+        </p>
+
+        {/* Impact stats */}
+        <div className="max-w-3xl mx-auto mb-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {[
+            { value: '4,500+', label: 'visitors to the café site I built' },
+            { value: '54%', label: 'click through to order online' },
+            { value: '+14%', label: 'YoY online ordering sales' },
+          ].map((stat) => (
+            <div key={stat.value} className="rounded-2xl border border-gray-200 bg-gray-50 px-4 py-5">
+              <div className="text-3xl md:text-4xl font-bold text-gray-900">{stat.value}</div>
+              <div className="mt-1 text-sm text-gray-600">{stat.label}</div>
+            </div>
+          ))}
         </div>
-        {/* Social badges */}
+
+        {/* Supporting copy */}
+        <p className="max-w-2xl mx-auto mb-8 text-base md:text-lg text-gray-600 leading-relaxed">
+          I built the website for the café I manage. I also built{' '}
+          <span className="font-semibold text-gray-800">Landr</span>, a full-stack job tracker
+          (Next.js, Express, PostgreSQL) that I use every day.
+        </p>
+
+        {/* Availability */}
+        <div className="mb-8 inline-flex items-center gap-2 rounded-full bg-green-50 border border-green-200 px-4 py-1.5 text-sm font-medium text-green-800">
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75 animate-ping"></span>
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
+          </span>
+          Open to junior frontend & full-stack roles
+        </div>
+
+        {/* CTAs + social icons */}
         <div className="flex gap-4 items-center justify-center flex-wrap mb-10">
-          <a 
-            href="https://www.linkedin.com/in/michael-kim-3514a9314/" 
-            className="px-4 py-2 border-2 border-gray-400 rounded-full text-sm text-gray-700 hover:border-gray-600 hover:bg-gray-100 transition"
+          <button
+            onClick={() => document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' })}
+            className="px-6 py-2.5 rounded-full bg-gray-900 text-white text-sm font-semibold hover:bg-gray-700 transition"
           >
-            LinkedIn
-          </a>
-          <a
-            href= "https://github.com/ChanYeob1202"
-            className="px-4 py-2 border-2 border-gray-400 rounded-full text-sm text-gray-700 hover:border-gray-600 hover:bg-gray-100 transition"
+            View my work
+          </button>
+          <button
+            onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+            className="px-6 py-2.5 rounded-full border-2 border-gray-900 text-gray-900 text-sm font-semibold hover:bg-gray-100 transition"
           >
-            GitHub
-          </a>
+            Get in touch
+          </button>
+          <div className="flex items-center gap-1 sm:ml-2">
+            <a
+              href="https://www.linkedin.com/in/michael-kim-3514a9314/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="p-2.5 rounded-full text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition"
+            >
+              <FaLinkedinIn className="w-5 h-5" />
+            </a>
+            <a
+              href="https://github.com/ChanYeob1202"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+              className="p-2.5 rounded-full text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition"
+            >
+              <FaGithub className="w-5 h-5" />
+            </a>
+          </div>
         </div>
       </div>
     </div>
