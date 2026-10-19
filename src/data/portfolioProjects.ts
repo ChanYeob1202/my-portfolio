@@ -37,8 +37,8 @@ export const portfolioProjects: PortfolioProject[] = [
       solution: [
         "Went back and redesigned the MVP around what a job seeker actually needs to do next. I added a follow-up queue that flags applications where you haven't heard back from the company in a while, with a one-click \"mark as followed up\".",
         "Debugged the 401 by treating each contradiction as a clue instead of guessing. The empty Network tab meant the request wasn't coming from the browser at all. Since the server logged nothing, I added my own logging middleware, which proved the Authorization header arrived as undefined.",
-        "That pointed to two wrong assumptions on my part. The page was a React Server Component, so its fetch ran on the Next.js server, where DevTools can't see it and localStorage, where the token lived, doesn't exist. And with JWTs it's the client, not the server, that holds and sends the token. I made the page a client component and attached the token explicitly.",
-        "Chose localStorage for the token on purpose for now: the frontend and API are on separate origins, and httpOnly cookies would need cross-origin cookie and CORS setup. I know the tradeoff (localStorage is exposed to XSS) and plan to move to httpOnly cookies.",
+        "That pointed to a wrong assumption on my part. The page was a React Server Component, so its fetch ran on the Next.js server, where DevTools can't see it and the browser's stored token isn't available. I made the page a client component, so the request is sent from the browser with the user's credentials.",
+        "Built authentication from scratch instead of using a library, to understand each layer: JWTs stored in httpOnly cookies with refresh tokens, so JavaScript on the page can never read the token, and Zod validation on every request body.",
         "Secured the data: bcrypt-hashed passwords, every /jobs query scoped by user_id, an allowlist of editable columns, and parameterized SQL. \"Not found\" and \"not yours\" return the same 404, so the API doesn't reveal which IDs exist.",
         "Made \"mark as followed up\" an optimistic update that rolls back if the request fails, and fixed a bug where the follow-up logic wrote into the job object and corrupted the snapshot used for the rollback.",
       ],
@@ -58,6 +58,8 @@ export const portfolioProjects: PortfolioProject[] = [
       "Express",
       "PostgreSQL",
       "Neon",
+      "Zod",
+      "Vitest",
       "Tailwind CSS"
     ],
     image: "/img/portfolio/landr.jpg",
@@ -72,12 +74,12 @@ export const portfolioProjects: PortfolioProject[] = [
       "The official website for a specialty coffee shop in Koreatown, LA. A real client project with real traffic.",
     caseStudy: {
       why:
-        "I was working as a manager at RNY Coffee Studio. The café relied on Instagram and Google Maps, and online ordering lived on a separate Toast page that customers had to find on their own. The owner needed a website that turned visitors into orders.",
+        "I'm the general manager at RNY Coffee Studio. The café relied on Instagram and Google Maps, and online ordering lived on a separate Toast page that customers had to find on their own. The owner needed a website that turned visitors into orders.",
       problem:
         "Most visitors were on their phones and wanted three things fast: hours, location, and a way to order. The first version loaded slowly on mobile because of large, unoptimized images (one photo alone was 3 MB). And there was no way to tell whether the site was actually bringing in orders.",
       solution: [
         "Designed a mobile-first single page with an \"Order Online\" button in the hero that goes straight to Toast, plus location, hours, and a contact form.",
-        "Ran Lighthouse audits and fixed what they flagged: compressed images (the About photo went from 3 MB to 34 KB), lazy-loaded images below the fold, and set long-term cache headers on Netlify.",
+        "Ran Lighthouse audits and fixed what they flagged: compressed images (the About photo went from 3 MB to 34 KB), lazy-loaded images below the fold, and set long-term cache headers.",
         "Added accessible names to icon-only links so screen readers can announce them.",
         "Set up Google Analytics 4 with a custom order_online_click event, so the owner can see how many visitors go on to order.",
         "Used that data to add a sticky \"Order Now\" bar on mobile, with UTM-tagged links that show which orders came from the website.",
@@ -91,7 +93,7 @@ export const portfolioProjects: PortfolioProject[] = [
       "Our own online store, so the café can sell its own products directly on the website.",
     ],
     status: "Active",
-    tech: ["React", "Bootstrap", "CSS"],
+    tech: ["React", "Tailwind CSS", "Vercel"],
     image: "/img/portfolio/rny.jpg",
     github: "https://github.com/ChanYeob1202/RNY-Studio-Coffee",
     demo: "http://rnycoffeestudio.com",
@@ -105,10 +107,10 @@ export const portfolioProjects: PortfolioProject[] = [
   {
     title: "Unroasted",
     description:
-      "A prototype coffee training and community platform, built to solve a problem I had as a café manager.",
+      "A coffee training and community platform, built to solve a problem I had as a café general manager.",
     caseStudy: {
       why:
-        "As a manager at RNY Coffee Studio, I trained a new group of 5–10 baristas every few months, and I was explaining the same coffee basics over and over.",
+        "As general manager at RNY Coffee Studio, I trained a new group of 5–10 baristas every few months, and I was explaining the same coffee basics over and over.",
       problem:
         "Training was repetitive and only happened in person. Once it ended, new baristas had nowhere to review what they'd learned or ask follow-up questions, and they couldn't learn from each other.",
       solution: [
@@ -118,15 +120,15 @@ export const portfolioProjects: PortfolioProject[] = [
         "Kept two backends on purpose: Strapi for content managers edit, Firebase for content users create, each fitting its job.",
       ],
       result: [
-        "Built a working prototype: managers can publish training articles from any device, and trainees can ask questions on a real-time community board.",
-        "It's a prototype with two sample articles, not a finished product. What I took from it was how to split content between a CMS and a real-time database based on who creates it.",
+        "Built a working platform: managers can publish training articles from any device, and trainees can ask questions on a real-time community board.",
+        "It has two training articles so far, with more on the way. What I took from it was how to split content between a CMS and a real-time database based on who creates it.",
       ],
     },
     next: [
       "Publish a full library of training articles, so new baristas can finish the theory part of their training entirely on the website.",
     ],
-    status: "Prototype",
-    tech: ["React", "Strapi", "Firebase", "Tailwind CSS"],
+    status: "Active",
+    tech: ["React", "Strapi", "Firebase", "Render", "Tailwind CSS"],
     image: "/img/portfolio/unRoasted.jpg",
     github: "https://github.com/ChanYeob1202/Unroasted",
     demo: "https://unroasted.vercel.app/"

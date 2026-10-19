@@ -13,8 +13,8 @@ export default function About() {
     },
     {
       title: "Backend",
-      description: "Building REST APIs with Node.js and Express, with JWT authentication and bcrypt-hashed passwords. When a login bug hid from every tool, I wrote my own logging middleware to find it.",
-      skills: "Node.js, Express, REST APIs, JWT Auth",
+      description: "Building REST APIs with Node.js and Express, with JWT authentication in httpOnly cookies and bcrypt-hashed passwords. When a login bug hid from every tool, I wrote my own logging middleware to find it.",
+      skills: "Node.js, Express, REST APIs, JWT Auth, Zod, Firebase",
     },
     {
       title: "Database",
@@ -24,7 +24,7 @@ export default function About() {
     {
       title: "Tools",
       description: "Shipping with Git and cloud deploys, then measuring the result. I add Google Analytics 4 events to see whether a feature is actually used.",
-      skills: "Git, GitHub, Vercel, Netlify, GA4",
+      skills: "Git, GitHub, Vitest, Vercel, Render, GA4",
     }
   ]
   
@@ -102,7 +102,7 @@ export default function About() {
             
             <div className="space-y-4 text-gray-700 text-base md:text-lg leading-relaxed">
               <p>
-                I started as a barista and became a manager at RNY Coffee Studio. That job taught me
+                I started as a barista and became the general manager at RNY Coffee Studio. That job taught me
                 how I like to work: notice a real problem, try a fix, and check whether it actually helped.
               </p>
               <p>
