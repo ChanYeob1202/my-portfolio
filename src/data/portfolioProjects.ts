@@ -69,6 +69,35 @@ export const portfolioProjects: PortfolioProject[] = [
     note: "Hosted on a free tier — the first load may take ~30–60s while the server wakes from sleep."
   },
   {
+    title: "Unroasted",
+    description:
+      "A coffee training and community platform, built to solve a problem I had as a café general manager.",
+    caseStudy: {
+      why:
+        "As general manager at RNY Coffee Studio, I trained a new group of 5–10 baristas every few months, and I was explaining the same coffee basics over and over.",
+      problem:
+        "Training was repetitive and only happened in person. Once it ended, new baristas had nowhere to review what they'd learned or ask follow-up questions, and they couldn't learn from each other.",
+      solution: [
+        "Used Strapi as a headless CMS so a manager can write a training article once and publish it from any device, without touching code.",
+        "Built a community board on Firebase where baristas can post questions, reply, and like helpful answers, with real-time updates.",
+        "Added Firebase Authentication so every post is tied to a real account, which keeps discussions safe and accountable.",
+        "Kept two backends on purpose: Strapi for content managers edit, Firebase for content users create, each fitting its job.",
+      ],
+      result: [
+        "Built a working platform: managers can publish training articles from any device, and trainees can ask questions on a real-time community board.",
+        "It has two training articles so far, with more on the way. What I took from it was how to split content between a CMS and a real-time database based on who creates it.",
+      ],
+    },
+    next: [
+      "Publish a full library of training articles, so new baristas can finish the theory part of their training entirely on the website.",
+    ],
+    status: "Active",
+    tech: ["React", "Strapi", "Firebase", "Render", "Tailwind CSS"],
+    image: "/img/portfolio/unRoasted.jpg",
+    github: "https://github.com/ChanYeob1202/Unroasted",
+    demo: "https://unroasted.vercel.app/"
+  },
+  {
     title: "RNY Coffee Studio",
     description:
       "The official website for a specialty coffee shop in Koreatown, LA. A real client project with real traffic.",
@@ -103,35 +132,6 @@ export const portfolioProjects: PortfolioProject[] = [
       { value: "54%", label: "Visitor-to-order-click rate" }
     ],
     metricsSource: "Google Analytics 4 · Feb – Oct 2026"
-  },
-  {
-    title: "Unroasted",
-    description:
-      "A coffee training and community platform, built to solve a problem I had as a café general manager.",
-    caseStudy: {
-      why:
-        "As general manager at RNY Coffee Studio, I trained a new group of 5–10 baristas every few months, and I was explaining the same coffee basics over and over.",
-      problem:
-        "Training was repetitive and only happened in person. Once it ended, new baristas had nowhere to review what they'd learned or ask follow-up questions, and they couldn't learn from each other.",
-      solution: [
-        "Used Strapi as a headless CMS so a manager can write a training article once and publish it from any device, without touching code.",
-        "Built a community board on Firebase where baristas can post questions, reply, and like helpful answers, with real-time updates.",
-        "Added Firebase Authentication so every post is tied to a real account, which keeps discussions safe and accountable.",
-        "Kept two backends on purpose: Strapi for content managers edit, Firebase for content users create, each fitting its job.",
-      ],
-      result: [
-        "Built a working platform: managers can publish training articles from any device, and trainees can ask questions on a real-time community board.",
-        "It has two training articles so far, with more on the way. What I took from it was how to split content between a CMS and a real-time database based on who creates it.",
-      ],
-    },
-    next: [
-      "Publish a full library of training articles, so new baristas can finish the theory part of their training entirely on the website.",
-    ],
-    status: "Active",
-    tech: ["React", "Strapi", "Firebase", "Render", "Tailwind CSS"],
-    image: "/img/portfolio/unRoasted.jpg",
-    github: "https://github.com/ChanYeob1202/Unroasted",
-    demo: "https://unroasted.vercel.app/"
   },
   {
     title: "Developer Portfolio Website",
