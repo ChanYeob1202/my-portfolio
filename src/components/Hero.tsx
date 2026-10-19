@@ -16,7 +16,7 @@ export default function Hero() {
               <span>Hello</span>
               <span className="inline-block bg-orange-400 rounded-full px-5 py-1 animate-bounce-twice">
                 <img 
-                  src="/img/profile.jpg"
+                  src="/img/profile-hero.jpg"
                   alt="profile"
                   className="w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 rounded-full object-cover inline-block"
                 />
