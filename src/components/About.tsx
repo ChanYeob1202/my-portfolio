@@ -197,67 +197,94 @@ function PhotoStack() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Menu board                                                          */
+/* Café receipt                                                        */
 /* ------------------------------------------------------------------ */
 
-function MenuRow({
-  item,
+const mono = { fontFamily: "'IBM Plex Mono', ui-monospace, monospace" };
+
+/** Zig-zag torn paper edge. */
+function TornEdge({ flip = false }: { flip?: boolean }) {
+  return (
+    <div
+      aria-hidden="true"
+      className="h-3 w-full"
+      style={{
+        background:
+          "linear-gradient(-45deg, transparent 6px, #fbf8f1 0) 0 0 / 12px 12px repeat-x, linear-gradient(45deg, transparent 6px, #fbf8f1 0) 0 0 / 12px 12px repeat-x",
+        transform: flip ? "rotate(180deg)" : undefined,
+      }}
+    />
+  );
+}
+
+function Rule({ char = "-" }: { char?: string }) {
+  return (
+    <p aria-hidden="true" className="overflow-hidden whitespace-nowrap text-gray-400 select-none my-4">
+      {char.repeat(120)}
+    </p>
+  );
+}
+
+/** One receipt line. Hover or tap prints its story below; it stays printed until clicked again. */
+function ReceiptLine({
   index,
-  active,
-  onSelect,
+  name,
+  tag,
+  open,
+  onOpen,
+  onToggle,
+  children,
 }: {
-  item: MenuItem;
-  index: number;
-  active: boolean;
-  onSelect: () => void;
+  index?: number;
+  name: string;
+  tag: string;
+  open: boolean;
+  onOpen: () => void;
+  onToggle: () => void;
+  children: ReactNode;
 }) {
   return (
     <li>
       <button
         type="button"
-        aria-expanded={active}
-        onMouseEnter={onSelect}
-        onFocus={onSelect}
-        onClick={onSelect}
-        className="group w-full flex items-baseline gap-3 py-3 text-left cursor-pointer"
-        style={board}
+        aria-expanded={open}
+        // mouse only: on touch screens a tap would fire both hover and click and cancel itself out
+        onPointerEnter={(e) => e.pointerType === "mouse" && onOpen()}
+        onClick={onToggle}
+        className={`group w-full flex items-baseline gap-2 py-2 px-2 -mx-2 rounded text-left cursor-pointer transition-colors ${
+          open ? "bg-gray-900/5" : "hover:bg-gray-900/5"
+        }`}
       >
-        <span className={`text-sm tabular-nums transition-colors ${active ? "text-amber-300" : "text-white/40"}`}>
-          {String(index + 1).padStart(2, "0")}
-        </span>
-        <span
-          className={`uppercase tracking-[0.12em] text-lg md:text-xl transition-colors ${
-            active ? "text-amber-300" : "text-white group-hover:text-amber-200"
-          }`}
-        >
-          {item.name}
-        </span>
-        <span
-          className={`flex-1 border-b-2 border-dotted translate-y-[-4px] transition-colors ${
-            active ? "border-amber-300/70" : "border-white/25"
-          }`}
+        {index !== undefined && <span className="text-gray-400 tabular-nums">{String(index).padStart(2, "0")}</span>}
+        <span className="uppercase font-semibold text-gray-900">{name}</span>
+        <span className="flex-1 border-b border-dotted border-gray-400 translate-y-[-5px]" aria-hidden="true" />
+        <span className="uppercase text-gray-700 whitespace-nowrap">{tag}</span>
+        <motion.span
+          animate={{ rotate: open ? 45 : 0 }}
+          className="ml-1 text-gray-400 group-hover:text-gray-900"
           aria-hidden="true"
-        />
-        <span
-          className={`uppercase tracking-wider text-sm md:text-base whitespace-nowrap transition-colors ${
-            active ? "text-amber-300" : "text-white/70"
-          }`}
         >
-          {item.tag}
-        </span>
+          +
+        </motion.span>
       </button>
-
-      {/* Phones: the story rolls down under the row */}
       <AnimatePresence initial={false}>
-        {active && (
+        {open && (
           <motion.div
-            className="md:hidden overflow-hidden"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            className="overflow-hidden"
           >
-            <div className="menu-body pb-4 pl-8">{item.body}</div>
+            {/* "printing" reveal: the text slides out of the printer from the top */}
+            <motion.div
+              initial={{ clipPath: "inset(0 0 100% 0)" }}
+              animate={{ clipPath: "inset(0 0 0% 0)" }}
+              transition={{ duration: 0.6, ease: "linear" }}
+              className="receipt-body pl-8 pr-2 pt-1 pb-4"
+            >
+              {children}
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -265,79 +292,159 @@ function MenuRow({
   );
 }
 
-function MenuBoard() {
-  const [active, setActive] = useState(0);
-  const current = menu[active];
+function useOpenSet(initial: string[] = []) {
+  const [open, setOpen] = useState<Set<string>>(new Set(initial));
+  return {
+    isOpen: (k: string) => open.has(k),
+    open: (k: string) => setOpen((s) => (s.has(k) ? s : new Set(s).add(k))),
+    toggle: (k: string) =>
+      setOpen((s) => {
+        const n = new Set(s);
+        if (n.has(k)) n.delete(k);
+        else n.add(k);
+        return n;
+      }),
+    all: (keys: string[]) => setOpen(new Set(keys)),
+    none: () => setOpen(new Set()),
+    count: open.size,
+  };
+}
+
+function Receipt() {
+  const lines = useOpenSet(["Why I build"]);
+  const allKeys = [...menu.map((m) => m.name), ...houseRules.map((r) => r.rule), ...toolkit.map((t) => t.title)];
 
   return (
-    <div
-      className="relative rounded-2xl p-6 md:p-10 text-white shadow-2xl overflow-hidden"
-      style={{
-        backgroundColor: "#1d1d1f",
-        // letterboard grooves
-        backgroundImage:
-          "repeating-linear-gradient(0deg, rgba(255,255,255,0.035) 0px, rgba(255,255,255,0.035) 1px, transparent 1px, transparent 9px)",
-      }}
+    // The outer element watches the viewport; the inner one is "printed" out from the top.
+    // (A clip-path on the watched element itself can stop it from ever counting as visible.)
+    <motion.div initial="hidden" whileInView="shown" viewport={{ once: true, amount: 0.05 }}>
+    <motion.div
+      variants={{ hidden: { clipPath: "inset(0 0 100% 0)" }, shown: { clipPath: "inset(0 0 0% 0)" } }}
+      transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+      className="relative mx-auto max-w-2xl drop-shadow-xl"
+      style={{ ...mono, transform: "rotate(-0.6deg)" }}
     >
-      <div className="flex items-center justify-between mb-6 border-b border-white/15 pb-4" style={board}>
-        <p className="uppercase tracking-[0.3em] text-sm text-white/60">On the menu today</p>
-        <p className="uppercase tracking-[0.3em] text-sm text-white/60 hidden sm:block">Est. 2019 · LA</p>
-      </div>
+      <TornEdge flip />
+      <div className="bg-[#fbf8f1] px-6 sm:px-10 py-8 text-sm sm:text-base text-gray-800">
+        {/* Header */}
+        <div className="text-center">
+          <p className="text-xl sm:text-2xl font-bold tracking-[0.2em] text-gray-900">MICHAEL KIM</p>
+          <p className="uppercase tracking-widest text-gray-600">Full-stack developer</p>
+          <p className="uppercase tracking-widest text-gray-500 text-xs mt-1">Los Angeles, CA</p>
+        </div>
+        <div className="mt-5 flex justify-between text-xs uppercase text-gray-500">
+          <span>Order #2019–2026</span>
+          <span>Server: Michael</span>
+        </div>
+        <Rule />
 
-      <div className="grid md:grid-cols-[1.1fr_1fr] gap-x-12">
+        <div className="flex items-center justify-between mb-2">
+          <p className="text-xs uppercase tracking-widest text-gray-500">
+            <span className="hidden sm:inline">Hover</span>
+            <span className="sm:hidden">Tap</span> a line to print the story
+          </p>
+          <button
+            type="button"
+            onClick={() => (lines.count >= allKeys.length ? lines.none() : lines.all(allKeys))}
+            className="text-xs uppercase tracking-widest text-blue-700 hover:underline cursor-pointer"
+          >
+            {lines.count >= allKeys.length ? "Fold all" : "Print all"}
+          </button>
+        </div>
+
+        {/* The story */}
         <ul>
-          {menu.map((item, i) => (
-            <MenuRow key={item.name} item={item} index={i} active={active === i} onSelect={() => setActive(i)} />
+          {menu.map((m, i) => (
+            <ReceiptLine
+              key={m.name}
+              index={i + 1}
+              name={m.name}
+              tag={m.tag}
+              open={lines.isOpen(m.name)}
+              onOpen={() => lines.open(m.name)}
+              onToggle={() => lines.toggle(m.name)}
+            >
+              {m.body}
+            </ReceiptLine>
           ))}
         </ul>
 
-        {/* Desktop: the selected story slides into a side panel, so rows never jump */}
-        <div className="hidden md:block relative min-h-80">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={current.name}
-              initial={{ opacity: 0, y: -16, clipPath: "inset(0 0 100% 0)" }}
-              animate={{ opacity: 1, y: 0, clipPath: "inset(0 0 0% 0)" }}
-              exit={{ opacity: 0, y: 12 }}
-              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="rounded-xl bg-[#f6f1e7] text-gray-800 p-7 shadow-lg relative"
-            >
-              {/* order-ticket notch */}
-              <span className="absolute -left-2 top-8 w-4 h-4 rounded-full bg-[#1d1d1f]" aria-hidden="true" />
-              <span className="absolute -right-2 top-8 w-4 h-4 rounded-full bg-[#1d1d1f]" aria-hidden="true" />
-              <p className="uppercase tracking-[0.25em] text-xs text-gray-500 mb-1" style={board}>
-                {current.tag}
-              </p>
-              <h3 className="uppercase tracking-[0.08em] text-2xl text-gray-900 mb-4" style={board}>
-                {current.name}
-              </h3>
-              <div className="menu-body menu-body--light">{current.body}</div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-      </div>
-
-      {/* House rules */}
-      <div className="mt-8 pt-6 border-t border-white/15">
-        <p className="uppercase tracking-[0.3em] text-sm text-white/60 mb-4" style={board}>
-          House rules
-        </p>
-        <div className="grid sm:grid-cols-3 gap-3">
+        <Rule />
+        <p className="uppercase tracking-widest text-xs text-gray-500 mb-1">House rules</p>
+        <ul>
           {houseRules.map((r, i) => (
-            <motion.div
+            <ReceiptLine
               key={r.rule}
-              whileHover={{ y: -4 }}
-              className="group rounded-lg border border-white/15 p-4 hover:border-amber-300/60 transition-colors"
+              name={`${i + 1}. ${r.rule}`}
+              tag="always"
+              open={lines.isOpen(r.rule)}
+              onOpen={() => lines.open(r.rule)}
+              onToggle={() => lines.toggle(r.rule)}
             >
-              <p className="uppercase tracking-[0.1em] text-base text-white group-hover:text-amber-300" style={board}>
-                {i + 1}. {r.rule}
-              </p>
-              <p className="mt-2 text-sm text-white/65 leading-relaxed">{r.why}</p>
-            </motion.div>
+              <p>{r.why}</p>
+            </ReceiptLine>
           ))}
+        </ul>
+
+        <Rule />
+        <p className="uppercase tracking-widest text-xs text-gray-500 mb-1">Ingredients</p>
+        <ul>
+          {toolkit.map((t) => (
+            <ReceiptLine
+              key={t.title}
+              name={t.title}
+              tag={`${t.skills.split(",").length} items`}
+              open={lines.isOpen(t.title)}
+              onOpen={() => lines.open(t.title)}
+              onToggle={() => lines.toggle(t.title)}
+            >
+              <p className="font-semibold text-gray-900">{t.skills}</p>
+              <p>{t.description}</p>
+            </ReceiptLine>
+          ))}
+        </ul>
+
+        <Rule char="=" />
+        <div className="space-y-1 uppercase">
+          <p className="flex justify-between">
+            <span>Projects shipped</span>
+            <span>4</span>
+          </p>
+          <p className="flex justify-between">
+            <span>Team experience</span>
+            <span>15+ people</span>
+          </p>
+          <p className="flex justify-between text-lg sm:text-xl font-bold text-gray-900 mt-2">
+            <span>Total</span>
+            <span>1 full-stack dev</span>
+          </p>
+          <p className="flex justify-between">
+            <span>Status</span>
+            <span className="text-green-700 font-semibold">Open to work</span>
+          </p>
+        </div>
+        <Rule char="=" />
+
+        {/* Barcode + thanks */}
+        <div className="text-center">
+          <div
+            aria-hidden="true"
+            className="mx-auto h-14 w-64 max-w-full"
+            style={{
+              background:
+                "repeating-linear-gradient(90deg, #111 0 2px, transparent 2px 4px, #111 4px 5px, transparent 5px 8px, #111 8px 11px, transparent 11px 12px)",
+            }}
+          />
+          <p className="mt-2 text-xs tracking-[0.4em] text-gray-500">MICHAELKIMDEV.COM</p>
+          <p className="mt-4 uppercase tracking-widest">Thank you for visiting!</p>
+          <a href="#contact" className="mt-1 inline-block uppercase tracking-widest text-blue-700 hover:underline">
+            Let's talk →
+          </a>
         </div>
       </div>
-    </div>
+      <TornEdge />
+    </motion.div>
+    </motion.div>
   );
 }
 
@@ -368,7 +475,7 @@ export default function About() {
                 I'm Michael. I build with React, TypeScript, Node.js and PostgreSQL. I also manage a café in Los
                 Angeles, which is where most of my projects started.
               </p>
-              <p className="text-gray-500">Pick something off the menu below to hear the story.</p>
+              <p className="text-gray-500">Here's my order. It comes with a story.</p>
             </motion.div>
 
             <div className="pb-10">
@@ -376,36 +483,7 @@ export default function About() {
             </div>
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6 }}
-            className="mb-20"
-          >
-            <MenuBoard />
-          </motion.div>
-
-          {/* Toolkit */}
-          <h3 className="uppercase tracking-[0.3em] text-sm text-gray-500 mb-6 text-center" style={board}>
-            The toolkit
-          </h3>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {toolkit.map((t) => (
-              <motion.div
-                key={t.title}
-                whileHover={{ y: -6 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-xl hover:border-gray-300 transition-shadow"
-              >
-                <h4 className="uppercase tracking-[0.1em] text-xl text-gray-900 mb-1" style={board}>
-                  {t.title}
-                </h4>
-                <p className="text-sm font-semibold text-blue-600 mb-3">{t.skills}</p>
-                <p className="text-gray-600 leading-relaxed">{t.description}</p>
-              </motion.div>
-            ))}
-          </div>
+          <Receipt />
         </div>
       </section>
     </MotionConfig>
