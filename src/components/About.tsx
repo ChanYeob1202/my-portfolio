@@ -469,13 +469,12 @@ export default function About() {
                 About me
               </p>
               <h2 className="text-3xl md:text-5xl font-bold text-gray-900 leading-tight mb-6">
-                A full-stack developer who builds tools people actually use, and checks whether they help.
+                Here's my order. It comes with a story.
               </h2>
               <p className="text-lg md:text-xl text-gray-600 leading-relaxed mb-6">
-                I'm Michael. I build with React, TypeScript, Node.js and PostgreSQL. I also manage a café in Los
-                Angeles, which is where most of my projects started.
+                I studied climate change at UCLA, I lead a café team of 15+ in LA, and I build full-stack apps. Every
+                project I've made started with a problem I ran into myself.
               </p>
-              <p className="text-gray-500">Here's my order. It comes with a story.</p>
             </motion.div>
 
             <div className="pb-10">
