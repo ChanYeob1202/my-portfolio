@@ -22,7 +22,6 @@ export default function Navbar() {
       <div className="hidden md:flex gap-4 text-black font-semibold">
         <button onClick={() => scrollToSection('hero')}>Home</button>
         <button onClick={() => scrollToSection('about')}>About</button>
-        <button onClick={() => scrollToSection('journey')}>Journey</button>
         <button onClick={() => scrollToSection('portfolio')}>Portfolio</button>
         <button onClick={() => scrollToSection('contact')}>Contact</button>
       </div>
@@ -44,9 +43,6 @@ export default function Navbar() {
             </button>
             <button onClick={() => scrollToSection('about')} className="w-full py-2 hover:bg-gray-200">
               About
-            </button>
-            <button onClick={() => scrollToSection('journey')} className="w-full py-2 hover:bg-gray-200">
-              Journey
             </button>
             <button onClick={() => scrollToSection('portfolio')} className="w-full py-2 hover:bg-gray-200">
               Portfolio
